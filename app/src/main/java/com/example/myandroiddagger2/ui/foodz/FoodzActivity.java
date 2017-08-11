@@ -11,17 +11,21 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myandroiddagger2.R;
+import com.example.myandroiddagger2.app.DeezFoodzApplication;
 import com.example.myandroiddagger2.app.StringUtils;
 import com.example.myandroiddagger2.model.FoodzItem;
 import com.example.myandroiddagger2.ui.food.FoodActivity;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FoodzActivity extends AppCompatActivity implements FoodzView {
 
+    @Inject
     FoodzPresenter presenter;
 
     @BindView(R.id.activity_foodz_recyclerView)
@@ -36,11 +40,12 @@ public class FoodzActivity extends AppCompatActivity implements FoodzView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodz);
 
+        ((DeezFoodzApplication)getApplication()).getAppComponent().inject(this);
+
         ButterKnife.bind(this);
 
         foodzRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        presenter = new FoodzPresenterImpl();
         presenter.setView(this);
         presenter.getFoodz();
     }

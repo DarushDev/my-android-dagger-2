@@ -17,11 +17,14 @@ import com.example.myandroiddagger2.app.StringUtils;
 import com.example.myandroiddagger2.model.Food;
 import com.example.myandroiddagger2.model.FoodzItem;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FoodActivity extends AppCompatActivity implements FoodView {
 
+  @Inject
   FoodPresenter presenter;
 
   public static final String EXTRA_FOOD_ID = "EXTRA_FOOD_ID";
@@ -59,7 +62,6 @@ public class FoodActivity extends AppCompatActivity implements FoodView {
 
     String foodId = getIntent().getStringExtra(EXTRA_FOOD_ID);
 
-    presenter = new FoodPresenterImpl();
     presenter.setView(this);
     presenter.getFood(foodId);
   }
