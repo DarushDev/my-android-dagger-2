@@ -1,11 +1,13 @@
 package com.example.myandroiddagger2.ui.food;
 
+import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.Log;
 
 import com.example.myandroiddagger2.R;
 import com.example.myandroiddagger2.app.Constants;
+import com.example.myandroiddagger2.app.DeezFoodzApplication;
 import com.example.myandroiddagger2.model.Food;
 import com.example.myandroiddagger2.model.FoodNutrient;
 import com.example.myandroiddagger2.model.FoodResponse;
@@ -13,16 +15,22 @@ import com.example.myandroiddagger2.network.UsdaApi;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodPresenterImpl implements FoodPresenter {
 
+    @Inject
+    UsdaApi usdaApi;
+
     private FoodView view;
+
+    public FoodPresenterImpl(Context context) {
+        ((DeezFoodzApplication)context).getAppComponent().inject(this);
+    }
 
     @Override
     public void setView(FoodView view) {
@@ -32,15 +40,6 @@ public class FoodPresenterImpl implements FoodPresenter {
     @Override
     public void getFood(String foodId) {
         view.showLoading();
-
-        Converter.Factory converter = GsonConverterFactory.create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(converter)
-                .build();
-
-        UsdaApi usdaApi = retrofit.create(UsdaApi.class);
 
         usdaApi.getFoodItem(foodId).enqueue(new Callback<FoodResponse>() {
             @Override

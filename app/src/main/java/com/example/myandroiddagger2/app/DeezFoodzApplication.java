@@ -8,16 +8,17 @@ import com.example.myandroiddagger2.dagger.DaggerAppComponent;
 
 public class DeezFoodzApplication extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        appComponent = initDagger(this);
-    }
-
     private AppComponent appComponent;
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        appComponent = initDagger(this);
     }
 
     protected AppComponent initDagger(DeezFoodzApplication application) {
@@ -25,5 +26,4 @@ public class DeezFoodzApplication extends Application {
                 .appModule(new AppModule(application))
                 .build();
     }
-
 }

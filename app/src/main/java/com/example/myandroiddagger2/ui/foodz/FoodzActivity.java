@@ -40,7 +40,7 @@ public class FoodzActivity extends AppCompatActivity implements FoodzView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodz);
 
-        ((DeezFoodzApplication)getApplication()).getAppComponent().inject(this);
+        ((DeezFoodzApplication) getApplication()).getAppComponent().inject(this);
 
         ButterKnife.bind(this);
 
